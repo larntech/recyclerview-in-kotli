@@ -4,10 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row_item.view.*
 
-class MyAdapter(private var item: List<MyModel>, private var context: Context) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private var item: List<MyModel>, private var context: Context, private var clickListener: ClickListener) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
 
     fun setData(item: List<MyModel>){
@@ -32,6 +33,11 @@ class MyAdapter(private var item: List<MyModel>, private var context: Context) :
 
         holder.header.text = name;
         holder.desc.text = desc;
+
+        holder.itemView.setOnClickListener {
+            clickListener.clickedItem(myModel);
+        }
+
     }
 
 
@@ -39,6 +45,10 @@ class MyAdapter(private var item: List<MyModel>, private var context: Context) :
         var header = itemView.tvHeader;
         var desc = itemView.tvDesc;
 
+    }
+
+    interface ClickListener{
+        fun clickedItem(myModel: MyModel);
     }
 
 }

@@ -2,11 +2,12 @@ package net.larntech.recyclerview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MyAdapter.ClickListener {
 
     private val myModel = listOf(
         MyModel("one","user one desc"),
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var myAdapter = MyAdapter(myModel,this);
+        var myAdapter = MyAdapter(myModel,this,this);
         myAdapter.setData(myModel);
 
         recyclerview.layoutManager = LinearLayoutManager(this)
@@ -25,5 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         recyclerview.adapter = myAdapter;
 
+    }
+
+    override fun clickedItem(myModel: MyModel) {
+        Toast.makeText(this,
+        "Clicked Item " + myModel.name,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
